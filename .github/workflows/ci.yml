@@ -13,7 +13,7 @@ on:
 
 jobs:
   qualidade-e-build:
-    name: Validar Backend, Tipagem e Docker
+    name: Validar Padronizacao, Tipos e Compilacao
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,7 @@ jobs:
       - name: 2. Configurar o pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 11
 
       - name: 3. Configurar Node.js com Cache
         uses: actions/setup-node@v4
@@ -41,17 +41,17 @@ jobs:
           cd backend
           pnpm run lint
 
-      - name: 6. Validar Formatacao de Arquivos (Prettier)
+      - name: 6. Validar Formatacao (Prettier)
         run: |
           cd backend
           pnpm run format:check
 
-      - name: 7. Checagem de Tipos (TypeScript)
+      - name: 7. Checagem de Tipos no Backend (tsc --noEmit)
         run: |
           cd backend
-          pnpm run typecheck
+          pnpm run type-check
 
-      - name: 8. Compilar o Projeto
+      - name: 8. Compilar Backend para Producao
         run: |
           cd backend
           pnpm run build

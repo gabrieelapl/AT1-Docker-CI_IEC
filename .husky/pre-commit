@@ -1,1 +1,2 @@
-cd backend && pnpm run typecheck && pnpm run check-all
+# Executa a verificação na pasta backend
+cd backend && pnpm run lint && pnpm run format:check && pnpm run type-check
