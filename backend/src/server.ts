@@ -18,7 +18,6 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', appRoutes);
 
-
 app.get('/api/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'OK', mensagem: 'Servidor operacional.' });
 });

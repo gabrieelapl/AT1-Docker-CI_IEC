@@ -45,5 +45,5 @@ Filme.init(
     sequelize,
     tableName: 'filmes',
     timestamps: true,
-  }
+  },
 );

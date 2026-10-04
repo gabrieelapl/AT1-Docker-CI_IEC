@@ -1,8 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.filmeRoutes = void 0;
-const express_1 = require("express");
-const FilmeController_1 = require("../controllers/FilmeController");
+const express_1 = require('express');
+const FilmeController_1 = require('../controllers/FilmeController');
 const router = (0, express_1.Router)();
 exports.filmeRoutes = router;
 router.get('/', FilmeController_1.FilmeController.index);

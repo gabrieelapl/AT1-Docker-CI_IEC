@@ -118,7 +118,10 @@
           "ano_lancamento": { "type": "integer", "example": 2014 },
           "nota": { "type": "number", "format": "float", "example": 8.7 },
           "disponibilidade_plataforma": { "type": "boolean", "example": true },
-          "createdAt": { "type": "string", "example": "2026-09-13T10:00:00.000Z" }
+          "createdAt": {
+            "type": "string",
+            "example": "2026-09-13T10:00:00.000Z"
+          }
         }
       },
       "CreateFilmeDTO": {
@@ -135,8 +138,14 @@
       "UpdateFilmeDTO": {
         "type": "object",
         "properties": {
-          "titulo": { "type": "string", "example": "Interestelar (versão estendida)" },
-          "genero": { "type": "string", "example": "Ficcao Cientifica / Drama" },
+          "titulo": {
+            "type": "string",
+            "example": "Interestelar (versão estendida)"
+          },
+          "genero": {
+            "type": "string",
+            "example": "Ficcao Cientifica / Drama"
+          },
           "ano_lancamento": { "type": "integer", "example": 2014 },
           "nota": { "type": "number", "format": "float", "example": 10.0 },
           "disponibilidade_plataforma": { "type": "boolean", "example": false }

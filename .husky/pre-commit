@@ -1,0 +1,1 @@
+cd backend && pnpm run typecheck && pnpm run check-all

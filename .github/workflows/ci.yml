@@ -1,4 +1,4 @@
-name: Monorepo CI Pipeline
+name: Continuous Integration
 
 on:
   push:
@@ -12,41 +12,50 @@ on:
   workflow_dispatch:
 
 jobs:
-  validar-backend:
+  qualidade-e-build:
     name: Validar Backend, Tipagem e Docker
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Baixar o codigo fonte
+      - name: 1. Baixar codigo do repositorio
         uses: actions/checkout@v4
 
-      - name: 2. Habilitar o pnpm
+      - name: 2. Configurar o pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 11
+          version: 10
 
       - name: 3. Configurar Node.js com Cache
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'pnpm'
 
-      - name: 4. Instalar Dependencias do Backend
+      - name: 4. Instalar dependencias
         run: |
           cd backend
           pnpm install --frozen-lockfile
 
-      - name: 5. Validar Tipos e Compilar o Backend
+      - name: 5. Validar Padronizacao de Codigo (ESLint)
+        run: |
+          cd backend
+          pnpm run lint
+
+      - name: 6. Validar Formatacao de Arquivos (Prettier)
+        run: |
+          cd backend
+          pnpm run format:check
+
+      - name: 7. Checagem de Tipos (TypeScript)
+        run: |
+          cd backend
+          pnpm run typecheck
+
+      - name: 8. Compilar o Projeto
         run: |
           cd backend
           pnpm run build
 
-      - name: 6. Validar Construcao da Imagem Docker
+      - name: 9. Validar Construcao da Imagem Docker
         run: |
           docker build -t api-service:test ./backend
-
-      - name: 7. Resumo da Execucao
-        run: |
-          echo "Integracao Continua concluida com sucesso!"
-          echo "Autor: ${{ github.actor }}"
-          echo "Commit: ${{ github.sha }}"
