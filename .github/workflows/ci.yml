@@ -1,0 +1,52 @@
+name: Monorepo CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  validar-backend:
+    name: Validar Backend, Tipagem e Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Baixar o codigo fonte
+        uses: actions/checkout@v4
+
+      - name: 2. Habilitar o pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: 3. Configurar Node.js com Cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 4. Instalar Dependencias do Backend
+        run: |
+          cd backend
+          pnpm install --frozen-lockfile
+
+      - name: 5. Validar Tipos e Compilar o Backend
+        run: |
+          cd backend
+          pnpm run build
+
+      - name: 6. Validar Construcao da Imagem Docker
+        run: |
+          docker build -t api-service:test ./backend
+
+      - name: 7. Resumo da Execucao
+        run: |
+          echo "Integracao Continua concluida com sucesso!"
+          echo "Autor: ${{ github.actor }}"
+          echo "Commit: ${{ github.sha }}"
