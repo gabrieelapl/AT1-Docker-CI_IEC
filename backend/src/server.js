@@ -12,7 +12,6 @@ const database_1 = require('./config/database');
 const routes_1 = require('./routes');
 const swagger_ui_express_1 = __importDefault(require('swagger-ui-express'));
 const swagger_json_1 = __importDefault(require('./docs/swagger.json'));
-require('./models/Filme');
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -31,6 +30,9 @@ async function main() {
   try {
     await database_1.sequelize.authenticate();
     console.log('Conexao com o banco de dados estabelecida com sucesso.');
+    // Sincroniza os models e força a criação/atualização de tabelas
+    await database_1.sequelize.sync({ alter: true });
+    console.log('Tabelas sincronizadas com sucesso.');
     app.listen(PORT, () => {
       console.log(`Servidor rodando em http://localhost:${PORT}`);
     });
